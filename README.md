@@ -1,1 +1,1 @@
-# TestyWesty
+# COMP348-Clojure
