@@ -1,0 +1,45 @@
+(ns app
+ (:require [db])
+ (:require [menu]))
+
+(defn process-choice [choice]
+  (when (= choice "1")
+    (def custDB (db/read-file-customer "cust.txt"))
+    (menu/press-enter-to-continue))
+  (when (= choice "2")
+    (def prodDB (db/read-file-product "prod.txt"))
+    (menu/press-enter-to-continue))
+  (when (= choice "3")
+    (db/read-file-sale "sales.txt")
+    (menu/press-enter-to-continue))
+  (when (= choice "4")
+    (println "Under Construction")
+    (menu/press-enter-to-continue))
+  (when (= choice "5")
+    (println "Under Construction")
+    (menu/press-enter-to-continue)))
+
+(defn loop-display-menu [exit-option]
+  (menu/display-menu)
+  (def choice (read-line))
+
+  (process-choice choice)
+
+  (loop [count 0]
+    (if (= choice exit-option)
+      (do
+        (println "\nProgram terminating...")
+        (println "Good Bye"))
+      (do
+        (menu/display-menu)
+        (def choice (read-line))
+
+        (process-choice choice)
+
+        (recur (inc count))))))
+
+(defn -main []
+    (loop-display-menu "6")
+  )
+
+(-main)
