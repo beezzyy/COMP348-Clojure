@@ -2,25 +2,45 @@
  (:require [db])
  (:require [menu]))
 
-;function that prints Good bye! and exists the program by printing Program is terminating... and then exiting the program
+ (def custDB (db/read-file-customer "cust.txt"))
+ (def prodDB (db/read-file-product "prod.txt"))
+ (def salesDB (db/read-file-sale "sales.txt"))
+
 (defn exit-program []
   (println "Good bye!")
   (println "Program is terminating...")
   (System/exit 0))
 
-; function that calls a specific function based on the user's choice from the menu
+(def saleID (for [[k v] salesDB] k))
+(def customerID (for [[k v] salesDB] (first v)))
+(def productID (for [[k v] salesDB] (second v)))
+(def productCount (for [[k v] salesDB] (last v)))
+(def productPrice (for [[k v] prodDB] (last v)))
+(def customerName (for [id customerID] (first (get custDB (Integer/parseInt id)))))
+(def productName (for [id productID] (first (get prodDB (Integer/parseInt id)))))
+
+(defn print-sales-report []
+  (def sales-report (zipmap saleID (map vector customerName productName productCount)))
+
+(db/print-dict sales-report)
+sales-report
+)
+
+;ask the user to enter the customer name, convert it to id and search in the salesDB
+  
+
+
+
 (defn call-function [choice]
   (cond
-    (= choice 1) (db/read-file-customer "cust.txt")
-    (= choice 2) (db/read-file-product "prod.txt")
-    (= choice 3) (db/read-file-sale "sales.txt")
-    ;; (= choice 4) (db/total-sales-for-customer)
+    (= choice 1) (db/print-dict custDB)
+    (= choice 2) (db/print-dict prodDB)
+    (= choice 3) (print-sales-report)
+    (= choice 4) (search-customer)
     ;; (= choice 5) (db/total-sales-for-product)
     (= choice 6) (exit-program)
-    ; print Please enter a valid choice! and then call the display-menu function
     :else (println "\nPlease enter a valid choice!")))
 
-;function that loops the menu until the user chooses to exit
 (defn loop-menu []
   (menu/display-menu)
   (def choice (read-line))
@@ -30,7 +50,7 @@
       (menu/press-enter-to-continue)
       (loop-menu))))
 
-; function that starts the application
+
 (defn start []
   (loop-menu))
 

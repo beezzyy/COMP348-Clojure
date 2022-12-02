@@ -17,8 +17,6 @@
           (def values
             (for [item list-elements] (drop 1 item)))
           (def dict (zipmap k values))
-          (println)
-          (print-dict  dict )
           dict
 )  
 
@@ -37,16 +35,21 @@
   (let [file-data (slurp filename)]
     (def file-data-split (str/split-lines file-data)))
 
-  (def entries
+  (def elements
     (for [line file-data-split]
       (str/split line #"\|")))
 
-      (list-to-dict entries)
+      (list-to-dict elements)
 )
 
 (defn read-file-sale [filename]
   (let [file-data (slurp filename)]
     (def file-data-split (str/split-lines file-data)))
 
+  (def elements
+    (for [line file-data-split]
+      (str/split line #"\|")))
+
+      (list-to-dict elements)
     
 )
