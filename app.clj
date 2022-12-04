@@ -90,7 +90,7 @@
     (= choice 5) (do  (println "\nEnter product name: ")
                       (flush)
                       (def product-name (read-line))
-                      (get-product-sales (str/lower-case product-name)))
+                      (get-product-sales  product-name))
     (= choice 6) (exit-program)
     :else (println "\nPlease enter a valid choice!")))
 
