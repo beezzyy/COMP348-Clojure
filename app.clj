@@ -80,9 +80,9 @@
 
 (defn call-function [choice]
   (cond
-    (= choice 1) (db/print-dict custDB)
-    (= choice 2) (db/print-dict prodDB)
-    (= choice 3) (db/print-dict parsedSalesDB)
+    (= choice 1) (db/print-dict (sort custDB))
+    (= choice 2) (db/print-dict (sort prodDB))
+    (= choice 3) (db/print-dict (sort parsedSalesDB))
     (= choice 4) (do  (println "\nEnter customer name: ")
                       (flush)
                       (def customer-name (read-line))
